@@ -1,0 +1,12 @@
+.box {
+  background: brown;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transition: box-shadow 1s ease-in-out;
+  box-shadow: 1px 2px 2px 2px black;
+}
+
+.box:hover {
+  box-shadow: 1px 2px 2px 6px black;
+}
