@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management</title>
+  <link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+  <div class="create-container">
+    <h3>Create a new student:</h3>
+    <input id="create-id" placeholder="Student ID"></input>
+    <input id="create-name" placeholder="Name"></input>
+    <input id="create-age" placeholder="Age"></input>
+    <button id="create-button">Create</button>
+  </div>
+
+  <div class="search-container">
+    <input id="search-id" placeholder="Search by ID"></input>
+    <button id="search-button">Search</button>
+  </div>
+
+  <div class="list-container">
+    <div class="student-list">
+      <ul id="students">
+      </ul>
+    </div>
+
+    <div class="update-container" id="update-form">
+      <input id="update-name" placeholder="Name"></input>
+      <input id="update-age" placeholder="Age"></input>
+      <button id="update-button">Update</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
