@@ -1,0 +1,14 @@
+- DATABASE
+ + SQL : MySQL, PostgreSQL, MariaDB, ...
+ + NoSQL : MongoDB, DynamoDB, Redis ...
+
+- MongoDB
+ 1. Databases
+ 2. Collections
+ 3. Documents
+
+- Pros
+ + JSON => Speed, High-performance 
+ + JSON => Readability, I/O
+ + Scalability
+ + Short learning curve
