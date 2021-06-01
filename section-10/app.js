@@ -10,6 +10,7 @@ mongoose.connect(configs.MONGO_CONNECTION_URL);
 app.use(express.json());
 app.use('/api/students', studentRouter.router);
 app.use('/api/subjects', subjectRouter.router);
+app.use('/', express.static(__dirname + '/views'));
 
 app.listen(configs.PORT, function () {
   console.log(`Server listening on port ${configs.PORT}`);

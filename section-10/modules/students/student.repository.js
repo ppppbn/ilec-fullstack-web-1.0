@@ -1,20 +1,15 @@
 const mongoose = require('mongoose');
 
 const StudentSchema = mongoose.Schema({
-  name: String,
-  age: Number,
-  subject: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject"
-  }
+  fullName: String,
+  phoneNum: String,
+  className: String
 });
 
 const Student = mongoose.model('Student', StudentSchema);
 
-const find = function (cb) {
-  Student.find({}).populate('subject').exec(function (err, data) {
-    cb(data);
-  });
+const find = function () {
+  return Student.find({}).exec(); // Promise (resolve data);
 }
 
 const findById = function (id, cb) {
@@ -26,9 +21,7 @@ const findById = function (id, cb) {
 const create = function (inputs, cb) {
   const newStudent = new Student(inputs);
 
-  newStudent.save(function() {
-    cb();
-  });
+  return newStudent.save();
 }
 
 const update = function (id, newObject, cb) {

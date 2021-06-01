@@ -1,19 +1,19 @@
 const repository = require('./student.repository');
 
-const find = function (cb) {
+const find = function (query) {
   // Business logic
 
   // Querying
-  repository.find(cb);
+  return repository.find(query);
 }
 
-const create = function (inputs, cb) {
+const create = function (inputs) {
   // Business logic
 
   // Data validation
 
   // Persist data
-  repository.create(inputs, cb);
+  return repository.create(inputs);
 }
 
 const update = function (id, newObject, cb) {

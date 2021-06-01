@@ -2,15 +2,20 @@ const express = require('express');
 const router = express.Router();
 const service = require('./student.service');
 
-router.get('/', function(req, res) {
-  service.find(function (data) {
+router.get('/', async function(req, res) {
+  try {
+    const data = await service.find();
     res.json(data);
-  });
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 router.post('/', function(req, res) {
-  service.create(req.body, function(data) {
-    res.send("OK");
+  service.create(req.body).then(function (result) {
+    res.json(result);
+  }).catch(function(error) {
+    res.status(500).json(error);
   });
 });
 
