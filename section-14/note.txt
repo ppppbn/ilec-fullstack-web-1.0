@@ -1,0 +1,24 @@
+- ReactJS : library : One way binding --- MVC: Model - View - Controller
+- Angular ( 1 -> 12 ) : framework
+  + Angular 1 <=> AngularJS ( MVVM => Two ways binding ) --- MVVM: Model - View -- View - Model
+  + Angular >= 2
+- VueJS : library ( One way binding -- two ways binding )
+  + Vue 2
+  + Vue 3
+
+REACTJS 
+
+- Components
+- JSX 
+- Immutable state ( Mutate )
+- One way binding vs Two ways binding
+- State / Props
+- List rendering
+- Conditional rendering
+
+FUTURE
+
+- Lifecycle hooks
+- Function Components
+- Navigation
+- UI Library for React: Ant Design
