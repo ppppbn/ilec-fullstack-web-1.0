@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductItem from './ProductItem';
+import { Row, Col } from 'antd';
 import './style.css';
 
 export default class FeatureProduct extends React.Component {
@@ -7,11 +8,15 @@ export default class FeatureProduct extends React.Component {
     return <div className="feature-product">
       <h3>Featured Products</h3>
       <div className="product-container">
-        {
-          this.props.products.length ?
-            this.props.products.map(product => <ProductItem product={product} key={product._id}/>)
-            : <h5>NO PRODUCTS</h5>
-        }
+        <Row gutter={60}>
+          {
+            this.props.products.length ?
+              this.props.products.map(product => <Col lg={8} sm={12} xs={24} key={product._id}>
+                <ProductItem product={product}/>
+              </Col>)
+              : <h5>NO PRODUCTS</h5>
+          }
+        </Row>
       </div>
     </div>;
   }
