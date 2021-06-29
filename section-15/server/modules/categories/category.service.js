@@ -1,26 +1,8 @@
-const repository = require('./product.repository');
+const repository = require('./category.repository');
 
 const find = function (query) {
-  if (!query.limit) {
-    throw new Error('Must have limit');
-  }
-
-  if (query.limit > 100) {
-    throw new Error('You cannot fetch that many');
-  }
-
-  if (!query.offset) {
-    query.offset = 0;
-  }
-
-  const limit = Number(query.limit);
-  const offset = Number(query.offset);
-
-  delete query.limit;
-  delete query.offset;
-
   // Transform query - Data validation
-  const supportedQueryFields = ['title', 'description', 'category'];
+  const supportedQueryFields = ['title', 'description'];
 
   Object.keys(query).forEach(function (key) {
     if (!supportedQueryFields.includes(key)) {
@@ -29,7 +11,7 @@ const find = function (query) {
   });
 
   // Querying
-  return repository.find(query, limit, offset);
+  return repository.find(query);
 }
 
 const create = function (inputs) {

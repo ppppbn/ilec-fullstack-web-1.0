@@ -1,15 +1,35 @@
 import React from 'react';
+import { get } from '../services/http';
+import { Link } from 'react-router-dom';
 
 export default class Footer extends React.Component {
+  state = {
+    categories: []
+  };
+
+  async componentDidMount() {
+    try {
+      const categoryResponse = await get('/categories');
+
+      this.setState({ 
+        categories: categoryResponse.data
+      });
+    } catch (err) {
+      //
+    }
+  }
+
   render() {
     return <footer className="footer">
       <div className="footer-info">
         <div className="footer-info__menu">
           <h3>Menu</h3>
           <nav>
-            <span>Cake</span>
-            <span>Bread & Panstry</span>
-            <span>Beverages</span>
+            {
+              this.state.categories.map(category => <Link key={category._id} to={`/products?category=${encodeURIComponent(category.title)}`}>
+                <span>{category.title}</span>
+              </Link>)
+            }
           </nav>
         </div>
         <div className="footer-info__contact">

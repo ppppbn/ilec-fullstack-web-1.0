@@ -1,5 +1,6 @@
 import React from 'react';
-import config from '../../../config';
+import config from '../config';
+import './style.css';
 
 export default class ProductItem extends React.Component {
   render () {
