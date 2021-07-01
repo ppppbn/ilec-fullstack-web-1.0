@@ -74,6 +74,11 @@
   padding: 0px 30px;
 }
 
+.product-item {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
 .product-item h4 {
   color: #585858;
   font-size: 21px;
