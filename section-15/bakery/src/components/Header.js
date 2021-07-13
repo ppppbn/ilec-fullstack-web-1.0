@@ -1,52 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { get } from '../services/http';
 import { Dropdown, Menu } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import useCategories from '../hooks/useCategories';
 import './style.css';
 
-export default class Header extends React.Component {
-  state = {
-    categories: []
-  };
+export default function Header() {
+  const categories = useCategories();
 
-  async componentDidMount() {
-    try {
-      const categoryResponse = await get('/categories');
-
-      this.setState({ 
-        categories: categoryResponse.data
-      });
-    } catch (err) {
-      //
+  const menu = <Menu>
+    {
+      categories.map(category => <Menu.Item key={category._id}>
+        <Link to={`/products?category=${encodeURIComponent(category.title)}`}>
+          { category.title }
+        </Link>
+      </Menu.Item>)
     }
-  }
+  </Menu>
 
-  render() {
-    const menu = <Menu>
-      {
-        this.state.categories.map(category => <Menu.Item key={category._id}>
-          <Link to={`/products?category=${encodeURIComponent(category.title)}`}>
-            { category.title }
-          </Link>
-        </Menu.Item>)
-      }
-    </Menu>
-
-    return <header className="header">
-      <div>
-        <Link to="/">
-          <img className="logo" src="logo.jpeg" alt="Logo"/>
-        </Link>
-        <Dropdown overlay={menu}>
-          <span className="menu-indicator">Menu</span>
-        </Dropdown>
-      </div>
-      <div className="cart-container">
-        <Link to='/cart'>
-          <ShoppingCartOutlined className="cart-icon"/>
-        </Link>
-      </div>
-    </header>;
-  }
+  return <header className="header">
+    <div>
+      <Link to="/">
+        <img className="logo" src="logo.jpeg" alt="Logo"/>
+      </Link>
+      <Dropdown overlay={menu}>
+        <span className="menu-indicator">Menu</span>
+      </Dropdown>
+    </div>
+    <div className="cart-container">
+      <Link to='/cart'>
+        <ShoppingCartOutlined className="cart-icon"/>
+      </Link>
+    </div>
+  </header>;
 }
