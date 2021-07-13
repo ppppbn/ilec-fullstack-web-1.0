@@ -2,7 +2,7 @@ import React from 'react';
 import FeatureProduct from '../../components/FeatureProduct';
 import { get } from '../../services/http';
 
-export default class HomePage extends React.Component {
+export default class Product extends React.Component {
   state = {
     products: []
   }
@@ -11,13 +11,15 @@ export default class HomePage extends React.Component {
     await this.fetchData();
   }
 
-  async componentDidUpdate() {
-    await this.fetchData();
+  async componentDidUpdate(oldProp) {
+    if (oldProp.location.search !== this.props.location.search) {
+      await this.fetchData();
+    }
   }
 
   async fetchData() {
     try {
-      const params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(this.props.location.search);
       const categoryQuery = params.get('category');
 
       const categoryResponse = await get(`/categories?title=${encodeURIComponent(categoryQuery)}`);
@@ -37,7 +39,7 @@ export default class HomePage extends React.Component {
 
   render () {
     return <div>
-      <FeatureProduct products={this.state.products}/>
+      <FeatureProduct title='Products' products={this.state.products}/>
     </div>
   }
 }

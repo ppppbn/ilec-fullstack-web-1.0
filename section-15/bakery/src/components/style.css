@@ -4,6 +4,7 @@
   background: #eff1f0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
 }
 
@@ -93,4 +94,27 @@
 
 .product-item img {
   width: 100%;
+}
+
+.cart-container {
+  margin-right: 40px;
+}
+
+.cart-icon {
+  font-size: 24px;
+  color:rgba(0,0,0, .8);
+  cursor: pointer;
+}
+
+.cart-icon:hover {
+  color: rgba(0,0,0, .95)
+}
+
+.text-center {
+  text-align: center;
+}
+
+.no-product-container {
+  flex: 1;
+  margin-bottom: 50px;
 }

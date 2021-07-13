@@ -18,7 +18,7 @@ export default class HomePage extends React.Component {
   render () {
     return <div>
       <Banner />
-      <FeatureProduct products={this.state.products}/>
+      <FeatureProduct title='Featured products' products={this.state.products}/>
     </div>
   }
 }

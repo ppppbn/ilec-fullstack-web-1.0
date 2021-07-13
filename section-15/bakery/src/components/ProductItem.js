@@ -14,7 +14,7 @@ const Component = class ProductItem extends React.Component {
 
       {
         checkProductExists(this.props.cart.products, this.props.product) ?
-        <Button type='danger'>Added</Button> :
+        <Button type='danger' onClick={() => this.props.removeProduct(this.props.product._id)}>Remove</Button> :
         <Button type='primary' onClick={() => this.props.addProduct(this.props.product)}>Add to cart</Button>
       }
     </div>
@@ -27,6 +27,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   addProduct: dispatch.cart.addProduct,
+  removeProduct: dispatch.cart.removeProduct
 })
 
 export default connect(

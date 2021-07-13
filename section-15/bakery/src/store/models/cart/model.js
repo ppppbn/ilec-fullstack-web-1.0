@@ -21,6 +21,13 @@ export const cart = {
           return product;
         })
       }
+    },
+
+    removeProduct(state, payload) {
+      return {
+        ...state,
+        products: state.products.filter(product => product._id !== payload)
+      }
     }
   },
   effects: dispatch => ({

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { get } from '../services/http';
 import { Dropdown, Menu } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import './style.css';
 
 export default class Header extends React.Component {
@@ -33,12 +34,19 @@ export default class Header extends React.Component {
     </Menu>
 
     return <header className="header">
-      <Link to="/">
-        <img className="logo" src="logo.jpeg" alt="Logo"/>
-      </Link>
-      <Dropdown overlay={menu}>
-        <span className="menu-indicator">Menu</span>
-      </Dropdown>
+      <div>
+        <Link to="/">
+          <img className="logo" src="logo.jpeg" alt="Logo"/>
+        </Link>
+        <Dropdown overlay={menu}>
+          <span className="menu-indicator">Menu</span>
+        </Dropdown>
+      </div>
+      <div className="cart-container">
+        <Link to='/cart'>
+          <ShoppingCartOutlined className="cart-icon"/>
+        </Link>
+      </div>
     </header>;
   }
 }
