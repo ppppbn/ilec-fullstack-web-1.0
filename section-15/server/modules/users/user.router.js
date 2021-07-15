@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const service = require('./category.service');
+const service = require('./user.service');
 
 router.get('/', async function(req, res) {
   try {
-    const data = await service.find(req.query, req.user);
+    const data = await service.find(req.query);
     res.json(data);
   } catch (error) {
     res.status(500).json({
