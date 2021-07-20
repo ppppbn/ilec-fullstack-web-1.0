@@ -29,10 +29,8 @@ const find = async function (query, limit, offset) {
   }
 }
 
-const findById = function (id, cb) {
-  User.findById(id).exec(function (err, data) {
-    cb(data);
-  });
+const findById = function (id) {
+  return User.findById(id);
 }
 
 const create = function (inputs, cb) {

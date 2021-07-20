@@ -1,8 +1,9 @@
 const repository = require('./category.repository');
-const authService = require('../auth/auth.service');
+const authHelper = require('../auth/auth.helper');
+const PERMISSIONS = require('../../constants/permissions');
 
 const find = function (query, user) {
-  if (!authService.authorization(user, ['ADMIN', 'USER'])) {
+  if (!authHelper.authorization(user.permissions, PERMISSIONS.CATEGORY.READ)) {
     throw new Error('You dont have permission to enter this resource');
   }
   // Transform query - Data validation

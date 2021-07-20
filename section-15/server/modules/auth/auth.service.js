@@ -64,16 +64,7 @@ const register = async (body) => {
   });
 }
 
-const authorization = (user, allowedRoles) => {
-  if (user && allowedRoles.includes(user.role)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 module.exports = {
   login,
-  register,
-  authorization
+  register
 };

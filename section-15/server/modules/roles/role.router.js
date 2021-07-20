@@ -1,21 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const service = require('./user.service');
+const service = require('./role.service');
 
 router.get('/', async function(req, res) {
   try {
     const data = await service.find(req.query);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
-    });
-  }
-});
-
-router.get('/profile', async function (req, res) {
-  try {
-    const data = await service.getProfile(req.user);
     res.json(data);
   } catch (error) {
     res.status(500).json({

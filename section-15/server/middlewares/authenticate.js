@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const roleService = require('../modules/roles/role.service');
 
 async function authenticate (req, res, next) {
   try {
@@ -18,11 +19,14 @@ async function authenticate (req, res, next) {
       return res.status(401).send("Token expired!");
     }
 
+    const permissions = await roleService.getPermissionsByRoleName(data.role);
+
     req.user = {
       _id: data._id,
       email: data.email,
       phoneNumber: data.phoneNumber,
-      role: data.role
+      role: data.role,
+      permissions: permissions
     };
 
     next();
