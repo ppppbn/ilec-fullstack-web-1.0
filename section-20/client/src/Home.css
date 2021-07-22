@@ -46,6 +46,7 @@
 .messages-container {
   flex: 1;
   padding: 20px;
+  overflow: auto;
 }
 
 .messages-container .message {
@@ -114,6 +115,7 @@
   border: 1px solid #888;
   border-radius: 6px;
   padding: 40px;
+  margin-bottom: 10px;
 }
 
 .login-container input {
@@ -134,4 +136,9 @@
   color: #ddd;
   width: 80px;
   cursor: pointer;
+}
+
+.register-link {
+  color: #ddd;
+  font-size: 12px;
 }

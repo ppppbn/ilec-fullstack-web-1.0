@@ -51,7 +51,7 @@ export default function App() {
             <Home user={user}/>
           </GuardedRoute>
           <GuardedRoute path='/login'>
-            <Login />
+            <Login fetchUser={fetchUser}/>
           </GuardedRoute>
           <GuardedRoute path='/register'>
             <Register />

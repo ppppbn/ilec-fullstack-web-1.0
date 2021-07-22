@@ -21,12 +21,15 @@ function Home(props) {
     
   }, []);
 
-  function submitMessage () {
-    socket.emit('chat', {
-      message: message,
-      sender: props.user.email
-    });
-    setMessage('');
+  function submitMessage (e) {
+    e.preventDefault();
+    if (message) {
+      socket.emit('chat', {
+        message: message,
+        sender: props.user.email
+      });
+      setMessage('');
+    }
   }
 
   return (
@@ -45,11 +48,13 @@ function Home(props) {
               })
             }
           </div>
-          <div className="input-container">
-            <input value={message} onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type something..."></input>
-            <button onClick={submitMessage}>Send</button>
-          </div>
+          <form onSubmit={(e) => submitMessage(e)}>
+            <div className="input-container">
+              <input value={message} onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type something..."></input>
+              <button type='submit'>Send</button>
+            </div>
+          </form>
         </div>
       </header>
     </div>

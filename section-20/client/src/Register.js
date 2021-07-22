@@ -1,7 +1,7 @@
 import './Home.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -9,7 +9,8 @@ function Register() {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const history = useHistory();
   
-  async function register () {
+  async function register (e) {
+    e.preventDefault();
     try {
       if (password !== confirmedPassword) {
         alert('Confirmed password did not match!!!');
@@ -34,15 +35,21 @@ function Register() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="login-container">
-          <input value={email} onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"></input>
-          <input value={password} type='password' onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"></input>
-          <input value={confirmedPassword} type='password' onChange={(e) => setConfirmedPassword(e.target.value)}
-            placeholder="Confirm your password"></input>
-          <button onClick={register}>Register</button>
-        </div>
+        <h3>Register</h3>
+        <form onSubmit={(e) => register(e)}>
+          <div className="login-container">
+            <input value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"></input>
+            <input value={password} type='password' onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"></input>
+            <input value={confirmedPassword} type='password' onChange={(e) => setConfirmedPassword(e.target.value)}
+              placeholder="Confirm your password"></input>
+            <button type='submit'>Register</button>
+          </div>
+        </form>
+        <Link to="/login">
+          <a className="register-link">Already have an account? Login.</a>
+        </Link>
       </header>
     </div>
   );
