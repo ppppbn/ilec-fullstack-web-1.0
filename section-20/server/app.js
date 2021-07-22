@@ -7,6 +7,7 @@ const userRouter = require('./modules/users/user.router');
 const authRouter = require('./modules/auth/auth.router');
 const roleRouter = require('./modules/roles/role.router');
 const authenticateMw = require('./middlewares/authenticate');
+const jwt = require('jsonwebtoken');
 
 mongoose.connect(configs.MONGO_CONNECTION_URL);
 
@@ -27,7 +28,31 @@ const io = require('socket.io')(server, {
   }
 });
 
-io.on('connection', (socket) => {
+io.use(async function (socket, next) {
+  if (socket.handshake.query.token) {
+    const token = socket.handshake.query.token;
+    const data = await jwt.verify(token, configs.secretKey);
+
+    if (!data) {
+      return next(new Error("Not authenticated!"));
+    }
+
+    if (data.exp <= Date.now() / 1000) {
+      return next(new Error("Token expired!"));
+    }
+
+    socket.user = {
+      _id: data._id,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      role: data.role
+    };
+
+    return next();
+  }
+  
+  return next(new Error("Not authenticated!"));
+}).on('connection', (socket) => {
   socket.emit('connect-success', socket.id);
 
   socket.on('chat', (value) => {

@@ -43,8 +43,7 @@ const login = async (body) => {
 const register = async (body) => {
   const schema = yup.object().shape({
     email: yup.string().email().required(),
-    password: yup.string().required(),
-    phoneNumber: yup.string().min(10).required()
+    password: yup.string().required()
   });
 
   await schema.validate(body);

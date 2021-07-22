@@ -1,50 +1,39 @@
-import './App.css';
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { Switch, BrowserRouter } from 'react-router-dom';
+import { GuardProvider, GuardedRoute } from 'react-router-guards';
+import Home from './Home';
+import Login from './Login';
+import Register from './Register';
+import Cookie from 'js-cookie';
 
-function App(props) {
-  const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
+export default function App(props) {
+  function checkAuthenticate (to, from, next) {
+    if (to.meta.requireAuth) {
+      if (Cookie.get('token')) {
+        next();
+      } else {
+        next.redirect('/login');
+      }
+    }
 
-  useEffect(() => {
-    props.socket.on('chat-incoming', (value) => {
-      let temp = messageList;
-      temp.push(value);
-
-      setMessageList([...temp]);
-    });
-    
-  }, [props.socket]);
-
-  function submitMessage () {
-    props.socket.emit('chat', {
-      message: message,
-      sender: props.socket.id
-    });
-    setMessage('');
+    return next();
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <div className="chat-container">
-          <div className="messages-container">
-            {
-              messageList.map(message => {
-                return <div className={`message ${message.sender === props.socket.id ? 'message-right' : 'message-left'}`} key={message.message}>
-                  <div className="message-content">{message.message}</div>
-                </div>
-              })
-            }
-          </div>
-          <div className="input-container">
-            <input value={message} onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type something..."></input>
-            <button onClick={submitMessage}>Send</button>
-          </div>
-        </div>
-      </header>
-    </div>
-  );
+  return <BrowserRouter>
+    <main>
+      <GuardProvider guards={[checkAuthenticate]}>
+        <Switch>
+          <GuardedRoute exact path='/' meta={{requireAuth: true}}>
+            <Home socket={props.socket}/>
+          </GuardedRoute>
+          <GuardedRoute path='/login'>
+            <Login />
+          </GuardedRoute>
+          <GuardedRoute path='/register'>
+            <Register />
+          </GuardedRoute>
+        </Switch>
+      </GuardProvider>
+    </main>
+  </BrowserRouter>
 }
-
-export default App;
