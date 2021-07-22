@@ -1,10 +1,11 @@
 import './Home.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { socket } from './socket';
 
 function Home(props) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const messageEnd = useRef(null);
 
   useEffect(() => {
     socket.on('chat-incoming', (value) => {
@@ -13,6 +14,7 @@ function Home(props) {
       temp.push(value);
 
       setMessageList([...temp]);
+      scrollToBottom();
     });
 
     return function cleanup() {
@@ -20,6 +22,10 @@ function Home(props) {
     }
     
   }, []);
+
+  function scrollToBottom () {
+    messageEnd.current.scrollIntoView();
+  }
 
   function submitMessage (e) {
     e.preventDefault();
@@ -47,6 +53,7 @@ function Home(props) {
                 </div>
               })
             }
+            <div ref={messageEnd}></div>
           </div>
           <form onSubmit={(e) => submitMessage(e)}>
             <div className="input-container">
