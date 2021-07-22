@@ -55,11 +55,13 @@
 .messages-container .message-left {
   display: flex;
   justify-content: flex-start;
+  text-align: left;
 }
 
 .messages-container .message-right {
   display: flex;
   justify-content: flex-end;
+  text-align: right;
 }
 
 .messages-container .message .message-content {
@@ -68,6 +70,19 @@
   color: #ddd;
   border: 1px solid #888;
   border-radius: 10px;
+}
+
+.messages-container .message .message-content .text {
+  text-align: inherit;  
+}
+
+.messages-container .message .message-content .email {
+  text-align: inherit;
+  font-style: italic;
+  font-size: 10px;
+  font-weight: 400;
+  color: #bbb;
+  margin-top: 5px;
 }
 
 .input-container {

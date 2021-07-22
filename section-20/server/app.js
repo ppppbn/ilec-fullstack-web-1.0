@@ -29,29 +29,33 @@ const io = require('socket.io')(server, {
 });
 
 io.use(async function (socket, next) {
-  if (socket.handshake.query.token) {
-    const token = socket.handshake.query.token;
-    const data = await jwt.verify(token, configs.secretKey);
+  try {
+    if (socket.handshake.query.token) {
+      const token = socket.handshake.query.token;
+      const data = await jwt.verify(token, configs.secretKey);
 
-    if (!data) {
-      return next(new Error("Not authenticated!"));
+      if (!data) {
+        return next(new Error("Not authenticated!"));
+      }
+
+      if (data.exp <= Date.now() / 1000) {
+        return next(new Error("Token expired!"));
+      }
+
+      socket.user = {
+        _id: data._id,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        role: data.role
+      };
+
+      return next();
     }
 
-    if (data.exp <= Date.now() / 1000) {
-      return next(new Error("Token expired!"));
-    }
-
-    socket.user = {
-      _id: data._id,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      role: data.role
-    };
-
-    return next();
+    return next(new Error("Not authenticated!"));
+  } catch (err) {
+    return next(err);
   }
-  
-  return next(new Error("Not authenticated!"));
 }).on('connection', (socket) => {
   socket.emit('connect-success', socket.id);
 

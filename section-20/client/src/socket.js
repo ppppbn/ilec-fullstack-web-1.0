@@ -9,15 +9,9 @@ function initConnection () {
       token: Cookie.get('token')
     }
   });
-
-  console.log('socket after initialized', socket);
-}
-
-function getSocket () {
-  return socket;
 }
 
 export {
   initConnection,
-  getSocket
+  socket
 };

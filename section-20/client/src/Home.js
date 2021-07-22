@@ -1,25 +1,30 @@
 import './Home.css';
 import { useState, useEffect } from 'react';
+import { socket } from './socket';
 
 function Home(props) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
-    console.log('tao dang chay useEffect', props.socket);
-    props.socket.on('chat-incoming', (value) => {
+    socket.on('chat-incoming', (value) => {
+
       let temp = messageList;
       temp.push(value);
 
       setMessageList([...temp]);
     });
+
+    return function cleanup() {
+      socket.off('chat-incoming');
+    }
     
-  }, [props.socket.id]);
+  }, []);
 
   function submitMessage () {
-    props.socket.emit('chat', {
+    socket.emit('chat', {
       message: message,
-      sender: props.socket.id
+      sender: props.user.email
     });
     setMessage('');
   }
@@ -31,8 +36,11 @@ function Home(props) {
           <div className="messages-container">
             {
               messageList.map(message => {
-                return <div className={`message ${message.sender === props.socket.id ? 'message-right' : 'message-left'}`} key={message.message}>
-                  <div className="message-content">{message.message}</div>
+                return <div className={`message ${message.sender === props.user.email ? 'message-right' : 'message-left'}`} key={message.message}>
+                  <div className="message-content">
+                    <div className="text">{message.message}</div>
+                    <div className="email">{message.sender}</div>
+                  </div>
                 </div>
               })
             }
