@@ -1,10 +1,11 @@
 import Cookie from 'js-cookie';
 import { io } from 'socket.io-client';
+import configs from './config';
 
 let socket;
 
 function initConnection () {
-  socket = io("http://localhost:3000", {
+  socket = io(configs.API_URL, {
     query: {
       token: Cookie.get('token')
     }

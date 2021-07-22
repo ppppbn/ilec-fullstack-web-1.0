@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookie from 'js-cookie';
 import { useHistory, Link } from "react-router-dom";
 import { initConnection } from './socket';
+import configs from './config';
 
 function Login(props) {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ function Login(props) {
   async function login(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', {
+      const response = await axios.post(`${configs.API_URL}/api/auth/login`, {
         email: email,
         password: password
       });

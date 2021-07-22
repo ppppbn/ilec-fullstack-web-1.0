@@ -6,6 +6,7 @@ import Login from './Login';
 import Register from './Register';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import configs from './config';
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -16,7 +17,7 @@ export default function App() {
 
   async function fetchUser () {
     try {
-      const response = await axios.get('http://localhost:3000/api/users/profile', {
+      const response = await axios.get(`${configs.API_URL}/api/users/profile`, {
         headers: {
           Authorization: Cookie.get('token')
         }

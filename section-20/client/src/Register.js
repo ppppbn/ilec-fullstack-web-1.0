@@ -2,6 +2,7 @@ import './Home.css';
 import { useState } from 'react';
 import axios from 'axios';
 import { useHistory, Link } from "react-router-dom";
+import configs from './config';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function Register() {
         return;
       }
 
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      const response = await axios.post(`${configs.API_URL}/api/auth/register`, {
         email: email,
         password: password
       });
