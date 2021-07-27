@@ -6,17 +6,23 @@ async function authenticate (req, res, next) {
   try {
     const token = req.headers.authorization;
     if (!token) {
-      return res.status(401).send("Not authenticated!");
+      return res.status(401).json({
+        message: "Not authenticated!"
+      });
     }
 
     const data = await jwt.verify(token, config.secretKey);
 
     if (!data) {
-      return res.status(401).send("Not authenticated!");
+      return res.status(401).json({
+        message: "Not authenticated!"
+      });
     }
 
     if (data.exp <= Date.now() / 1000) {
-      return res.status(401).send("Token expired!");
+      return res.status(401).json({
+        message: "Token expired!"
+      });
     }
 
     const permissions = await roleService.getPermissionsByRoleName(data.role);

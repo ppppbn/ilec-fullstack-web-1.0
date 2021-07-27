@@ -1,16 +1,17 @@
 const repository = require('./user.repository');
 const authHelper = require('../auth/auth.helper');
 const PERMISSIONS = require('../../constants/permissions');
+const AppError = require('../../error/AppError');
 
 const find = function (query, user) {
   // check permissions
   
   if (!query.limit) {
-    throw new Error('Must have limit');
+    throw new AppError(400, 'Must have limit');
   }
 
   if (query.limit > 100) {
-    throw new Error('You cannot fetch that many');
+    throw new AppError(400, 'Cannot fetch that many!');
   }
 
   if (!query.offset) {
@@ -28,7 +29,7 @@ const find = function (query, user) {
 
   Object.keys(query).forEach(function (key) {
     if (!supportedQueryFields.includes(key)) {
-      throw new Error(`Unrecognized field: ${key}`);
+      throw new AppError(400, `Unrecognized field: ${key}`);
     }
   });
 
@@ -37,6 +38,10 @@ const find = function (query, user) {
 }
 
 const getProfile = function (user) {
+  if (!authHelper.authorization(user.permissions, PERMISSIONS.USER.READ_SELF)) {
+    throw new AppError(401, 'Permission required!');
+  }
+
   return repository.findById(user._id);
 }
 

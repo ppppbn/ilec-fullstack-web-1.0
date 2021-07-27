@@ -7,7 +7,7 @@ router.get('/', async function(req, res) {
     const data = await service.find(req.query);
     res.json(data);
   } catch (error) {
-    res.status(500).json({
+    res.status(error.status || 500).json({
       message: error.message
     });
   }
@@ -18,7 +18,7 @@ router.get('/profile', async function (req, res) {
     const data = await service.getProfile(req.user);
     res.json(data);
   } catch (error) {
-    res.status(500).json({
+    res.status(error.status || 500).json({
       message: error.message
     });
   }
